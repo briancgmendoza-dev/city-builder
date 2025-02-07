@@ -13,10 +13,10 @@ import Modal from "@/app/_components/ui/modal"
 import HouseIcon from "../../icons/house"
 import TrashcanIcon from "../../icons/trashcan"
 
-import { THouse } from "@/app/_components/container/houses-list/type"
+import { THouse, THousesListProps } from "@/app/_components/container/houses-list/type"
 import { generateAlphanumericId } from "@/app/utils"
 
-const HousesList = () => {
+const HousesList: React.FC<THousesListProps> = ({ name, temp, showIcon }) => {
   const [showModal, setShowModal] = useState<boolean>(false)
   const [houses, setHouses] = useState<THouse[]>(
     [
@@ -89,8 +89,8 @@ const HousesList = () => {
   return (
     <Container type="section" className="md:w-[50%] border">
       <Container className="flex items-center justify-between bg-slate-200 p-4">
-        <Typography type="h2" text="Houses List" />
-        <DisplayWeather temperature="10 &#8451;" showIcon="Snowy" />
+        <Typography type="h2" text={name} className="font-bold" />
+        <DisplayWeather temperature={`${temp} °C`} showIcon={showIcon} />
       </Container>
       <Container className="mt-2">
         {houses.map((house) => (

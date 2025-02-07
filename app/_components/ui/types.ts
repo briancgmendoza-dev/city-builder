@@ -42,6 +42,6 @@ export type TModalProps = {
 }
 
 export type TDisplayWeatherProps = {
-  showIcon: 'Rainy' | 'Sunny' | 'Snowy'
+  showIcon: string
   temperature: string
 }

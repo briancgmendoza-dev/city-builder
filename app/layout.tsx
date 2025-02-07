@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins} from "next/font/google";
+
+import QueryProvider from "@/app/_components/container/query-provider";
 import "./globals.css";
 
 const font = Poppins({
@@ -19,10 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${font.className} antialiased`}
-      >
-        {children}
+      <body className={`${font.className} antialiased`}>
+        <QueryProvider>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
