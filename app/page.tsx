@@ -8,7 +8,7 @@ export default function Home() {
     <main className="p-8 pb-20 sm:p-20">
       <Container type="section" className="w-full h-full">
         <HeroMessage />
-        <Container className="mt-10 flex flex-col md:flex-row border border-red-600">
+        <Container className="mt-10 flex flex-col md:flex-row">
           <HousesList />
           <HousesContainer />
         </Container>

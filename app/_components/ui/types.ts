@@ -20,3 +20,9 @@ export type TSliderProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   className?: string
 }
+
+export type TInputTextProps = {
+  text: string
+  cb: (string: string) => void
+  className?: string
+}

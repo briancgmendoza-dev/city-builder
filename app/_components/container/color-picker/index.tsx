@@ -17,13 +17,13 @@ const ColorPicker = () => {
     "Purple"
   ]
 
-  // TODO: Might need to convert in useMemo or maybe useCallback is enough?
+  // TODO: Might need to convert useCallback is enough?
   const handleOnChange = (event:  React.ChangeEvent<HTMLSelectElement>) => {
     setColorValue(event.target.value)
   }
 
   return (
-    <Container className="px-3 py-1 flex items-center justify-between w-[120px]">
+    <Container className="px-3 py-1 flex items-center justify-between w-[180px]">
       <Typography text="Color:" className="text-sm mr-1 font-semibold" />
       <Select
         options={options}
