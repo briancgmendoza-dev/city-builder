@@ -26,3 +26,11 @@ export type TInputTextProps = {
   cb: (string: string) => void
   className?: string
 }
+
+export type TButtonProps = {
+  icon?: React.ReactNode
+  text?: string
+  cb: () => void
+  className?: string
+  iconClassName?: string
+}
