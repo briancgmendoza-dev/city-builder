@@ -11,3 +11,12 @@ export type TSelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   value: string
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
+
+export type TSliderProps = {
+  min: number
+  max: number
+  step: number
+  value: number
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  className?: string
+}

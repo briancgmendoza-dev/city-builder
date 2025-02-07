@@ -1,6 +1,7 @@
 import Container from "@/app/_components/container"
 import Typography from "@/app/_components/ui/typography"
 import ColorPicker from "../color-picker"
+import FloorSlider from "@/app/_components/container/floor-slider"
 
 const HousesList = () => (
   <Container type="section" className="md:w-[50%]">
@@ -9,6 +10,7 @@ const HousesList = () => (
     </Container>
     <Container>
       <div>Houses</div>
+      <FloorSlider />
       <ColorPicker />
     </Container>
     <Container className="bg-slate-200 flex justify-center items-center p-4">
