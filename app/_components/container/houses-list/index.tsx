@@ -3,6 +3,7 @@
 import React, { useState, useCallback } from "react"
 
 import Container from "@/app/_components/container"
+import DisplayWeather from "@/app/_components/ui/display-weather"
 import InputText from "@/app/_components/ui/input-text"
 import Typography from "@/app/_components/ui/typography"
 import ColorPicker from "@/app/_components/container/color-picker"
@@ -87,8 +88,9 @@ const HousesList = () => {
 
   return (
     <Container type="section" className="md:w-[50%] border">
-      <Container className="bg-slate-200 p-4">
-        <Typography type="h2" text="Houses List" className=""/>
+      <Container className="flex items-center justify-between bg-slate-200 p-4">
+        <Typography type="h2" text="Houses List" />
+        <DisplayWeather temperature="10 &#8451;" showIcon="Snowy" />
       </Container>
       <Container className="mt-2">
         {houses.map((house) => (

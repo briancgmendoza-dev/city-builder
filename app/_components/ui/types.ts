@@ -40,3 +40,8 @@ export type TModalProps = {
   isOpen: boolean
   closeModal: () => void
 }
+
+export type TDisplayWeatherProps = {
+  showIcon: 'Rainy' | 'Sunny' | 'Snowy'
+  temperature: string
+}
