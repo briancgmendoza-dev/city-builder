@@ -6,9 +6,10 @@ import Container from "@/app/_components/container"
 import Select from "@/app/_components/ui/select"
 import Typography from "@/app/_components/ui/typography"
 
-const ColorPicker = () => {
-  const [colorValue, setColorValue] = useState<string>('')
+import { TColorPickerProps } from "@/app/_components/container/color-picker/type"
 
+const ColorPicker: React.FC<TColorPickerProps> = ({ color, cb }) => {
+  const [colorValue, setColorValue] = useState<string>(color)
   const options: string[] = [
     "Red",
     "Blue",
@@ -16,10 +17,9 @@ const ColorPicker = () => {
     "Pink",
     "Purple"
   ]
-
-  // TODO: Might need to convert useCallback is enough?
   const handleOnChange = (event:  React.ChangeEvent<HTMLSelectElement>) => {
     setColorValue(event.target.value)
+    cb(event.target.value)
   }
 
   return (

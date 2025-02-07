@@ -8,6 +8,7 @@ import Typography from "@/app/_components/ui/typography"
 import ColorPicker from "@/app/_components/container/color-picker"
 import FloorSlider from "@/app/_components/container/floor-slider"
 import Button from "@/app/_components/ui/button"
+import Modal from "@/app/_components/ui/modal"
 import HouseIcon from "../../icons/house"
 import TrashcanIcon from "../../icons/trashcan"
 
@@ -15,6 +16,7 @@ import { THouse } from "@/app/_components/container/houses-list/type"
 import { generateAlphanumericId } from "@/app/utils"
 
 const HousesList = () => {
+  const [showModal, setShowModal] = useState<boolean>(false)
   const [houses, setHouses] = useState<THouse[]>(
     [
       {
@@ -61,11 +63,22 @@ const HousesList = () => {
     []
   )
 
-  const handleNameUpdate = useCallback(
+  const handleUpdateName = useCallback(
     (houseId: string, newHouseName: string) => {
       setHouses(
         (prevHouse) => prevHouse.map(
           (house) => house.id === houseId ? { ...house, name: newHouseName } : house
+        )
+      )
+    },
+    []
+  )
+
+  const handleUpdateColor= useCallback(
+    (houseId: string, newColor: string) => {
+      setHouses(
+        (prevHouse) => prevHouse.map(
+          (house) => house.id === houseId ? { ...house, color: newColor } : house
         )
       )
     },
@@ -83,7 +96,7 @@ const HousesList = () => {
             <Container className="px-4 flex flex-row items-start justify-between">
               <InputText
                 text={house.name}
-                cb={(newHouseName) => handleNameUpdate(house.id, newHouseName)}
+                cb={(newHouseName) => handleUpdateName(house.id ?? '', newHouseName)}
                 className="w-[150px] md:w-[30%] px-4 py-2"
               />
               <Button
@@ -96,9 +109,9 @@ const HousesList = () => {
             <Container className="w-full md:w-[90%] px-5 flex flex-col md:flex-row items-start justify-between">
               <FloorSlider
                 floors={house.floors}
-                cb={(newFloorCount) => handleUpdateFloors(house.id, newFloorCount)}
+                cb={(newFloorCount) => handleUpdateFloors(house.id ?? '', newFloorCount)}
               />
-              <ColorPicker />
+              <ColorPicker color={house.color} cb={(newColor) => handleUpdateColor(house.id ?? '', newColor)} />
             </Container>
           </Container>
         ))}
@@ -107,11 +120,13 @@ const HousesList = () => {
         <Button
           icon={<HouseIcon />}
           text="Build a new house"
-          cb={() => {}}
+          cb={() => setShowModal(!showModal)}
           className="flex items-center justify-center py-2 px-5"
           iconClassName="mr-2"
         />
       </Container>
+
+      <Modal isOpen={showModal} closeModal={() => setShowModal(!showModal)} />
     </Container>
   )
 }

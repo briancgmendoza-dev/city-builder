@@ -1,5 +1,5 @@
 export type THouse = {
-  id: string
+  id?: string
   name: string
   floors: number
   color: string

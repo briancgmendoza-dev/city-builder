@@ -22,7 +22,8 @@ export type TSliderProps = {
 }
 
 export type TInputTextProps = {
-  text: string
+  text?: string
+  name?: string
   cb: (string: string) => void
   className?: string
 }
@@ -30,7 +31,12 @@ export type TInputTextProps = {
 export type TButtonProps = {
   icon?: React.ReactNode
   text?: string
-  cb: () => void
+  cb?: () => void
   className?: string
   iconClassName?: string
+}
+
+export type TModalProps = {
+  isOpen: boolean
+  closeModal: () => void
 }
