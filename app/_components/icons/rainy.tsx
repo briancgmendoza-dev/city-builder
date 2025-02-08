@@ -1,1 +1,3 @@
-export const RainyIcon = () => <img src="/rainy.svg" alt="rainy" className="w-[50px] h-[50px] shadow-md rounded-full" />
+import Image from "next/image"
+
+export const RainyIcon = () => <Image src="/rainy.svg" alt="rainy" className="shadow-md rounded-full" width={50} height={50} />

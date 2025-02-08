@@ -9,16 +9,14 @@ import Typography from "@/app/_components/ui/typography"
 import { TColorPickerProps } from "@/app/_components/container/color-picker/type"
 import { colorOptions } from "@/app/constant"
 
-const ColorPicker: React.FC<TColorPickerProps> = ({ color, cb }) => {
+const ColorPicker = React.forwardRef<HTMLDivElement, TColorPickerProps>(({ color, cb }, ref) => {
   const [colorValue, setColorValue] = useState<string>(color)
-
   const handleOnChange = (event:  React.ChangeEvent<HTMLSelectElement>) => {
     setColorValue(event.target.value)
     cb(event.target.value)
   }
-
   return (
-    <Container className="px-3 py-1 flex items-center justify-between w-[180px]">
+    <Container ref={ref} className="px-3 py-1 flex items-center justify-between w-[180px]">
       <Typography text="Color:" className="text-sm mr-1 font-semibold" />
       <Select
         options={colorOptions}
@@ -27,6 +25,7 @@ const ColorPicker: React.FC<TColorPickerProps> = ({ color, cb }) => {
       />
     </Container>
   )
-}
+})
 
+ColorPicker.displayName = "ColorPicker"
 export default ColorPicker

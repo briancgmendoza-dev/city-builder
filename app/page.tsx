@@ -1,15 +1,15 @@
 'use client'
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query"
 
-import Container from "@/app/_components/container";
-import HeroMessage from "@/app/_components/container/hero-message";
-import HousesList from "@/app/_components/container/houses-list";
-import HousesContainer from "@/app/_components/container/houses-container";
-import Typography from "@/app/_components/ui/typography";
-import Loader from "@/app/_components/ui/loader";
+import Container from "@/app/_components/container"
+import HeroMessage from "@/app/_components/container/hero-message"
+import HousesList from "@/app/_components/container/houses-list"
+import HousesContainer from "@/app/_components/container/houses-container"
+import Typography from "@/app/_components/ui/typography"
+import Loader from "@/app/_components/ui/loader"
 
-import { WeatherService } from "./service/weather-service";
+import { WeatherService } from "./service/weather-service"
 
 export default function Home() {
   const { isLoading, error } = useQuery({
@@ -29,7 +29,7 @@ export default function Home() {
         className="text-red-500"
         text={`Error: ${error instanceof Error ? error.message : "An error occurred"}`}
       />
-    );
+    )
   }
 
   return (

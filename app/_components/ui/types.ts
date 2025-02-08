@@ -1,5 +1,4 @@
 import React from "react"
-import { THouse } from "@/app/_components/container/houses-list/type"
 
 export type TTypographyProps = {
   text: string
@@ -30,6 +29,7 @@ export type TInputTextProps = {
 }
 
 export type TButtonProps = {
+  type: "button" | "submit"
   icon?: React.ReactNode
   text?: string
   cb?: () => void
@@ -40,6 +40,7 @@ export type TButtonProps = {
 export type TModalProps = {
   isOpen: boolean
   closeModal: () => void
+  modalPropsCityName: string
 }
 
 export type TDisplayWeatherProps = {

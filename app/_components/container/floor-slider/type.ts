@@ -1,4 +1,4 @@
 export type TFloorSliderProps = {
-  floors: number,
+  floors: number
   cb: (number: number) => void
 }

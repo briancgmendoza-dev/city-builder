@@ -1,16 +1,15 @@
-import React, { useCallback, useState } from "react";
+import React from "react"
 
 import Container from "@/app/_components/container"
 import Typography from "@/app/_components/ui/typography"
-import AddHouse from "@/app/_components/form/add-house";
+import AddHouse from "@/app/_components/form/add-house"
 
-import { TModalProps } from "@/app/_components/ui/types";
+import { TModalProps } from "@/app/_components/ui/types"
 
-const Modal = React.forwardRef<HTMLDivElement, TModalProps>(({ isOpen, closeModal }, ref) => {
+const Modal = React.forwardRef<HTMLDivElement, TModalProps>(({ isOpen, closeModal, modalPropsCityName }, ref) => {
   const handleStopPropagate = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  };
-
+    event.stopPropagation()
+  }
   return (
     <section
       className={`
@@ -39,11 +38,12 @@ const Modal = React.forwardRef<HTMLDivElement, TModalProps>(({ isOpen, closeModa
           <Container className="flex justify-between items-center mb-4">
             <Typography type="h1" text="Building your dream house..." className="text-lg font-bold" />
           </Container>
-          <AddHouse cb={closeModal} />
+          <AddHouse cb={closeModal} city={modalPropsCityName} />
         </div>
       </Container>
     </section>
-  );
-});
+  )
+})
 
-export default Modal;
+Modal.displayName = "Modal"
+export default Modal

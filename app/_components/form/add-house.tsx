@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react"
-import { useQueryClient } from "@tanstack/react-query"
+import { useQueryClient, useMutation } from "@tanstack/react-query"
 
 import Container from "@/app/_components/container"
 import Typography from "@/app/_components/ui/typography"
@@ -10,15 +10,12 @@ import ColorPicker from "@/app/_components/container/color-picker"
 
 import { TAddHouseFormProps } from "@/app/_components/form/type"
 import { THouse } from "@/app/_components/container/houses-list/type"
-import { TCityWeather } from "@/app/service/type"
 
 import { HouseService } from "@/app/service/house-service"
 import { generateAlphanumericId } from "@/app/utils"
 
-const AddHouse: React.FC<TAddHouseFormProps> = ({ cb }) => {
+const AddHouse: React.FC<TAddHouseFormProps> = ({ cb, city }) => {
   const appQueryClient = useQueryClient()
-  const cities = appQueryClient.getQueryData<TCityWeather[]>(['cities'])
-  const [citiesArr, _] = useState<(TCityWeather | { error: string })[]>(cities ?? [{ error: 'No data...'}])
   const [addHouseValues, setAddHouseValues] = useState<THouse>({
     name: '',
     floors: 1,
@@ -61,33 +58,29 @@ const AddHouse: React.FC<TAddHouseFormProps> = ({ cb }) => {
     []
   )
 
-  const handleResetValues = () => setAddHouseValues(
-    () => ({
-      name: '',
-      floors: 1,
-      color: 'Red'
-    })
-  )
+  const addHouseMutation = useMutation<THouse[], Error, THouse>({
+    mutationFn: async (newHouse: THouse) => {
+      return await HouseService.addHouse(city, [newHouse], appQueryClient, cb)
+    },
+    onSuccess: () => {
+      appQueryClient.invalidateQueries({ queryKey: ['cities'] })
+    }
+  })
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const validCities = citiesArr.filter((city): city is TCityWeather => !("error" in city));
     const newHouseWithId = {
       ...addHouseValues,
       id: generateAlphanumericId()
     }
 
-    if (validCities.length > 0) {
-      HouseService.addHouse('Sydney', [newHouseWithId], validCities)
-    }
+    await addHouseMutation.mutateAsync(newHouseWithId)
 
-    handleResetValues()
-    cb()
-  }
+  }, [addHouseValues, addHouseMutation])
 
   return (
     <form onSubmit={handleOnSubmit}>
-      {Object.keys(addHouseValues).map((key, index) => {
+      {Object.keys(addHouseValues).map((key) => {
         const value = addHouseValues[key as keyof THouse]
         return (
           <Container key={key} className="mt-3">
@@ -114,12 +107,14 @@ const AddHouse: React.FC<TAddHouseFormProps> = ({ cb }) => {
 
       <Container className="mt-4 flex items-center justify-between">
         <Button
+          type="submit"
           text="Submit"
           className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-          />
+        />
         <Button
+          type="button"
           text="Close"
-          cb={() => cb}
+          cb={() => cb()}
           className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
         />
       </Container>
