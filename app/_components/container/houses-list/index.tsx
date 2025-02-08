@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 
 import Container from "@/app/_components/container"
@@ -23,6 +23,8 @@ const HousesList: React.FC<[]> = () => {
   const cities = appQueryClient.getQueryData<TCityWeather[]>(['cities'])
   const [showModal, setShowModal] = useState<boolean>(false)
   const [citiesArr, setCitiesArr] = useState<(TCityWeather | { error: string })[]>(cities ?? [{ error: 'No data...'}])
+  const [inputValues, setInputValues] = useState<{[houseId: string]: string}>({})
+  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null)
 
   const updateHouse = useCallback(
     (cityName: string, houseId: string, updateFn: (house: THouse) => THouse | null) => {
@@ -57,10 +59,19 @@ const HousesList: React.FC<[]> = () => {
 
   const handleUpdateName = useCallback(
     (cityName: string, houseId: string, newHouseName: string) => {
-      // Add a debounce InputText loses focus every keystroke
-      updateHouse(cityName, houseId, (house) => ({ ...house, name: newHouseName }))
+      setInputValues(
+        (prevInputValues) => ({ ...prevInputValues, [houseId]: newHouseName })
+      )
+
+      if (debounceTimeout) clearTimeout(debounceTimeout)
+
+      const timeoutId = setTimeout(() => {
+        updateHouse(cityName, houseId, (house) => ({ ...house, name: newHouseName }))
+      }, 300)
+
+      setDebounceTimeout(timeoutId)
     },
-    [updateHouse]
+    [debounceTimeout, updateHouse]
   );
 
   const handleUpdateColor = useCallback(
@@ -85,6 +96,12 @@ const HousesList: React.FC<[]> = () => {
     [updateHouse]
   )
 
+  useEffect(() => {
+    return () => {
+      if (debounceTimeout) clearTimeout(debounceTimeout)
+    }
+  }, [debounceTimeout])
+
   return (
     <Container type="section" className="md:w-[50%] border">
       {citiesArr?.map((city) => {
@@ -105,7 +122,8 @@ const HousesList: React.FC<[]> = () => {
                 <Container className="my-3" key={house.name}>
                   <Container className="px-4 flex flex-row items-start justify-between">
                     <InputText
-                      text={house.name}
+                      key={house.id}
+                      text={house.id && inputValues[house.id] ? inputValues[house.id] : house.name}
                       cb={(newHouseName) => handleUpdateName(city.name, house.id as string, newHouseName)}
                       className="w-[150px] md:w-[30%] px-4 py-2"
                     />
