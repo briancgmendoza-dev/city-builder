@@ -10,10 +10,12 @@ export const WeatherService = {
     const cachedData = queryClient.getQueryCache().find({ queryKey: ['cities'] })
 
     if (cachedData) {
-      const citiesWithUpdatedHouses = (cachedData.state.data as TCityWeather[]).map((city: TCityWeather) => city)
+      const citiesFromCache = (cachedData.state.data as TCityWeather[])
 
-      if (citiesWithUpdatedHouses.length > 0) {
-        return citiesWithUpdatedHouses
+      const allCitiesHaveEmptyHouses = citiesFromCache.every((city) => city.houses.length === 0)
+
+      if (!allCitiesHaveEmptyHouses) {
+        return citiesFromCache
       }
     }
 
