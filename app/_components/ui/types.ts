@@ -1,4 +1,5 @@
 import React from "react"
+import { THouse } from "@/app/_components/container/houses-list/type"
 
 export type TTypographyProps = {
   text: string

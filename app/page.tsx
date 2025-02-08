@@ -12,7 +12,7 @@ import Loader from "@/app/_components/ui/loader";
 import { WeatherService } from "./service/weather-service";
 
 export default function Home() {
-  const { data: cities, isLoading, error } = useQuery({
+  const { isLoading, error } = useQuery({
     queryFn: () => WeatherService.getAllCitiesRealTimeWeatherUpdate(),
     queryKey: ['cities']
   })
@@ -36,22 +36,10 @@ export default function Home() {
     <main className="p-8 pb-20 sm:p-20">
       <Container type="section" className="w-full h-full">
         <HeroMessage />
-        {cities?.map((city, index) => {
-          if ('error' in city) {
-            return (
-              <div key={index} className="text-red-500">
-                Error: {city.error}
-              </div>
-            );
-          }
-
-          return (
-            <Container className="mt-10 flex flex-col md:flex-row" key={city.name}>
-              <HousesList name={city.name} temp={city.temp_c} showIcon={city.condition.text} />
-              <HousesContainer />
-            </Container>
-          );
-        })}
+        <Container className="mt-10 flex flex-col md:flex-row">
+          <HousesList />
+          <HousesContainer />
+        </Container>
       </Container>
     </main>
   );

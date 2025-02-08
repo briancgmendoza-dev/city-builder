@@ -1,6 +1,7 @@
 import request from "@/app/service"
 import { cities, NEXT_PUBLIC_API_KEY } from "@/app/constant"
 import { TCityWeather } from "@/app/service/type"
+import { THouse } from "@/app/_components/container/houses-list/type"
 
 export const WeatherService = {
   getAllCitiesRealTimeWeatherUpdate: async (): Promise<(TCityWeather | { error: string })[]> => {
@@ -13,8 +14,9 @@ export const WeatherService = {
         .then((response) => {
           const { name } = response?.data?.location
           const { temp_c, condition } = response?.data.current
+          const houses: THouse[] = []
 
-          return { name, temp_c, condition }
+          return { name, temp_c, condition, houses }
         })
         .catch((error) => {
           return { error: error.message ?? "Error fetching updates" }

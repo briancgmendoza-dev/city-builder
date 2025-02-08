@@ -1,3 +1,5 @@
+import { THouse } from "@/app/_components/container/houses-list/type";
+
 export type THttpMethod = 'GET'
 
 export type TRequestOptions<T extends THttpMethod> = {
@@ -9,6 +11,7 @@ export type TCityWeather = {
   name: string
   temp_c: string;
   condition: TCityCondition
+  houses: THouse[]
 }
 
 type TCityCondition = {
