@@ -19,5 +19,21 @@ export const HouseService = {
     } catch (error) {
       throw new Error(`${error}`)
     }
+  },
+  deleteHouse: async (city: string, houseId: string, cities: TCityWeather[]): Promise<THouse[]> => {
+    try {
+      return await new Promise<THouse[]>((resolve, reject) => {
+        const filterCity = cities.filter((c) => c.name === city)
+
+        if (filterCity.length === 0) reject(new Error(`City ${city} not found`))
+        const updatedCity = filterCity[0]
+
+        updatedCity.houses = updatedCity.houses.filter((house) => house.id !== houseId)
+
+        resolve(updatedCity.houses)
+      })
+    } catch (error) {
+      throw new Error (`${error}`)
+    }
   }
 }

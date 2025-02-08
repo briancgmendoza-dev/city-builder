@@ -16,26 +16,27 @@ import TrashcanIcon from "../../icons/trashcan"
 
 import { THouse } from "@/app/_components/container/houses-list/type"
 import { TCityWeather } from "@/app/service/type"
+import { HouseService } from "@/app/service/house-service"
 
-const HousesList: React.FC<{}> = () => {
+const HousesList: React.FC<[]> = () => {
   const appQueryClient = useQueryClient()
   const cities = appQueryClient.getQueryData<TCityWeather[]>(['cities'])
   const [showModal, setShowModal] = useState<boolean>(false)
   const [citiesArr, setCitiesArr] = useState<(TCityWeather | { error: string })[]>(cities ?? [{ error: 'No data...'}])
 
   const updateHouse = useCallback(
-    (cityName: string, houseId: string, updateFn: (house: THouse) => THouse) => {
+    (cityName: string, houseId: string, updateFn: (house: THouse) => THouse | null) => {
       setCitiesArr((prevCities) => {
         return prevCities.map((city) => {
           if ("error" in city) return city;
 
           if (city.name === cityName) {
             const updatedHouses = city.houses.map((house) => {
-              if (house.id === houseId) {
-                return updateFn(house)
-              }
-              return house
+              const updatedHouse = updateFn(house)
+              return updatedHouse ? updatedHouse : null
             })
+            .filter((house) => house !== null)
+
             return { ...city, houses: updatedHouses }
           }
           return city;
@@ -69,6 +70,21 @@ const HousesList: React.FC<{}> = () => {
     [updateHouse]
   );
 
+  const handleDeleteHouse = useCallback(
+    (cityName: string, houseId: string) => {
+      // const validCities = citiesArr.filter((city): city is TCityWeather => !("error" in city))
+      // HouseService.deleteHouse(city, houseId, validCities)
+      // TO FIX: HouseService.deleteHouse works, but it doesn't invalidate the queryKey
+      // Maybe use .then(() => invalidate) ??
+
+      updateHouse(cityName, houseId, (house) => {
+        if (house.id === houseId) return null
+        return house
+      })
+    },
+    [updateHouse]
+  )
+
   return (
     <Container type="section" className="md:w-[50%] border">
       {citiesArr?.map((city) => {
@@ -97,7 +113,7 @@ const HousesList: React.FC<{}> = () => {
                       icon={<TrashcanIcon />}
                       className="p-1 bg-white"
                       iconClassName=""
-                      cb={() => {}}
+                      cb={() => handleDeleteHouse(city.name, house.id as string)}
                     />
                   </Container>
                   <Container className="w-full md:w-[90%] px-5 flex flex-col md:flex-row items-start justify-between">
