@@ -1,10 +1,22 @@
+import { QueryClient } from "@tanstack/react-query"
+
 import request from "@/app/service"
 import { cities, NEXT_PUBLIC_API_KEY } from "@/app/constant"
 import { TCityWeather } from "@/app/service/type"
 import { THouse } from "@/app/_components/container/houses-list/type"
 
 export const WeatherService = {
-  getAllCitiesRealTimeWeatherUpdate: async (): Promise<(TCityWeather | { error: string })[]> => {
+  getAllCitiesRealTimeWeatherUpdate: async (queryClient: QueryClient): Promise<(TCityWeather | { error: string })[]> => {
+    const cachedData = queryClient.getQueryCache().find({ queryKey: ['cities'] })
+
+    if (cachedData) {
+      const citiesWithUpdatedHouses = (cachedData.state.data as TCityWeather[]).map((city: TCityWeather) => city)
+
+      if (citiesWithUpdatedHouses.length > 0) {
+        return citiesWithUpdatedHouses
+      }
+    }
+
     try {
       const weatherPromises = cities.map((city) => {
         return request({

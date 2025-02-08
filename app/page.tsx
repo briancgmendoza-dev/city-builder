@@ -1,6 +1,6 @@
 'use client'
 
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 import Container from "@/app/_components/container"
 import HeroMessage from "@/app/_components/container/hero-message"
@@ -9,12 +9,13 @@ import HousesContainer from "@/app/_components/container/houses-container"
 import Typography from "@/app/_components/ui/typography"
 import Loader from "@/app/_components/ui/loader"
 
-import { WeatherService } from "./service/weather-service"
+import { WeatherService } from "@/app/service/weather-service"
 
 export default function Home() {
+  const queryClient = useQueryClient()
   const { isLoading, error } = useQuery({
-    queryFn: () => WeatherService.getAllCitiesRealTimeWeatherUpdate(),
-    queryKey: ['cities']
+    queryFn: () => WeatherService.getAllCitiesRealTimeWeatherUpdate(queryClient),
+    queryKey: ['cities'],
   })
 
   if (isLoading) {
