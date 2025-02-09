@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react"
-import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query"
+import { useQueryClient, useMutation } from "@tanstack/react-query"
 
 import Container from "@/app/_components/container"
 import DisplayWeather from "@/app/_components/ui/display-weather"
