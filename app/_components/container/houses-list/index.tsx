@@ -12,20 +12,20 @@ import Modal from "@/app/_components/ui/modal"
 import HouseIcon from "../../icons/house"
 import TrashcanIcon from "../../icons/trashcan"
 
+import { THousesListProps } from "@/app/_components/container/houses-list/type"
 import { THouse } from "@/app/_components/container/houses-list/type"
-import { TCityWeather } from "@/app/service/type"
+import { TCities } from "@/app/service/type"
 import { HouseService } from "@/app/service/house-service"
 
-const HousesList = React.forwardRef<HTMLDivElement>((_, ref) => {
+const HousesList = React.forwardRef<HTMLDivElement, THousesListProps>(({ city }, ref) => {
   const appQueryClient = useQueryClient()
-  const { data: cities } = useQuery<TCityWeather[]>({ queryKey: ['cities'] })
   const [showModal, setShowModal] = useState<boolean>(false)
   // const [showToaster, setShowToaster] = useState<boolean>(false) // TODO: Add Toaster
   const [modalPropsCityName, setModalPropsCityName] = useState<string>('')
 
   const updateHouse = useCallback(
     (cityName: string, houseId: string, updateFn: (house: THouse) => THouse | null) => {
-      const cities = appQueryClient.getQueryData<TCityWeather[]>(['cities'])
+      const cities = appQueryClient.getQueryData<TCities[]>(['cities'])
 
       if (cities) {
         const updatedCities = cities.map((city) => {
@@ -84,66 +84,57 @@ const HousesList = React.forwardRef<HTMLDivElement>((_, ref) => {
   )
 
   return (
-    <Container ref={ref} type="section" className="md:w-[50%] border">
-      {cities?.map((city, index) => {
-        return (
-          <Container
-            key={city.name}
-            className={(index === 0 || index === cities.length - 1) ? 'm-0': 'my-10'}
-          >
-            <Container className="flex items-center justify-between bg-slate-200 p-4">
-              <Typography type="h2" text={city.name} className="font-bold" />
-              <DisplayWeather temperature={`${city.temp_c} °C`} showIcon={city.condition.text} />
-            </Container>
-            {city.houses.length > 0 ? city.houses.map((house) => (
-              <Container key={house.id}>
-                <Container className="px-4 flex flex-row items-start justify-between my-2">
-                  <InputText
-                    key={house.id}
-                    text={house.name}
-                    cb={(newHouseName) => handleUpdateName(city.name, house.id as string, newHouseName)}
-                    className="w-[150px] md:w-[30%] px-4 py-2"
-                  />
-                  <Button
-                    type="button"
-                    icon={<TrashcanIcon />}
-                    cb={() => handleDeleteHouse(city.name, house.id as string)}
-                    className="p-1 bg-white"
-                  />
-                </Container>
-                <Container className="w-full md:w-[90%] px-5 flex flex-col md:flex-row items-start justify-between">
-                  <FloorSlider
-                    floors={house.floors}
-                    cb={(newFloorCount) => handleUpdateFloors(city.name, house.id as string, newFloorCount)}
-                  />
-                  <ColorPicker
-                    color={house.color}
-                    cb={(newColor) => handleUpdateColor(city.name, house.id as string, newColor)}
-                  />
-                </Container>
-              </Container>
-            )) : (
-              <Container className="flex items-center justify-center">
-                <Typography text="No house yet..." />
-              </Container>
-            )}
-
-            <Container className="bg-slate-200 flex justify-center items-center p-4">
-              <Button
-                type="button"
-                icon={<HouseIcon />}
-                text="Build a new house"
-                cb={() => {
-                  setShowModal(!showModal)
-                  setModalPropsCityName(city.name)
-                }}
-                className="flex items-center justify-center py-2 px-5 bg-white"
-                iconClassName="mr-2"
-              />
-            </Container>
+    <Container ref={ref} type="section" className="md:w-[50%]">
+      <Container className="flex items-center justify-between bg-slate-200 p-4">
+        <Typography type="h2" text={city.name} className="font-bold" />
+        <DisplayWeather temperature={`${city.temp_c} °C`} showIcon={city.condition.text} />
+      </Container>
+      {city.houses.length > 0 ? city.houses.map((house) => (
+        <Container key={house.id}>
+          <Container className="px-4 flex flex-row items-start justify-between my-2">
+            <InputText
+              key={house.id}
+              text={house.name}
+              cb={(newHouseName) => handleUpdateName(city.name, house.id as string, newHouseName)}
+              className="w-[150px] md:w-[30%] px-4 py-2"
+            />
+            <Button
+              type="button"
+              icon={<TrashcanIcon />}
+              cb={() => handleDeleteHouse(city.name, house.id as string)}
+              className="p-1 bg-white"
+            />
           </Container>
-        )
-      })}
+          <Container className="w-full md:w-[90%] px-5 flex flex-col md:flex-row items-start justify-between">
+            <FloorSlider
+              floors={house.floors}
+              cb={(newFloorCount) => handleUpdateFloors(city.name, house.id as string, newFloorCount)}
+            />
+            <ColorPicker
+              color={house.color}
+              cb={(newColor) => handleUpdateColor(city.name, house.id as string, newColor)}
+            />
+          </Container>
+        </Container>
+      )) : (
+        <Container className="flex items-center justify-center">
+          <Typography text="No house yet..." />
+        </Container>
+      )}
+
+      <Container className="bg-slate-200 flex justify-center items-center p-4 mb-5">
+        <Button
+          type="button"
+          icon={<HouseIcon />}
+          text="Build a new house"
+          cb={() => {
+            setShowModal(!showModal)
+            setModalPropsCityName(city.name)
+          }}
+          className="flex items-center justify-center py-2 px-5 bg-white"
+          iconClassName="mr-2"
+        />
+      </Container>
       {showModal && (
         <Modal isOpen={showModal} closeModal={() => setShowModal(!showModal)} modalPropsCityName={modalPropsCityName} />
       )}

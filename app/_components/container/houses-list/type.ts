@@ -1,7 +1,7 @@
+import { TCities } from "@/app/service/type"
+
 export type THousesListProps = {
-  name: string
-  temp: string
-  showIcon: string
+  city: TCities
 }
 
 export type THouse = {

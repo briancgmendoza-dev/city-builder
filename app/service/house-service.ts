@@ -1,11 +1,11 @@
 import { QueryClient } from "@tanstack/react-query"
 
 import { THouse } from "@/app/_components/container/houses-list/type"
-import { TCityWeather } from "@/app/service/type"
+import { TCities } from "@/app/service/type"
 
 export const HouseService = {
   addHouse: async (cityName: string, newHouse: THouse[], queryClient: QueryClient, cb: () => void): Promise<THouse[]> => {
-    const cities = queryClient.getQueryData<TCityWeather[]>(['cities'])
+    const cities = queryClient.getQueryData<TCities[]>(['cities'])
     try {
       return await new Promise<THouse[]>((_resolve, reject) => {
         if (!cities) {
@@ -28,7 +28,7 @@ export const HouseService = {
     }
   },
   deleteHouse: async (cityName: string, houseId: string, queryClient: QueryClient): Promise<void> => {
-    const cities = queryClient.getQueryData<TCityWeather[]>(['cities'])
+    const cities = queryClient.getQueryData<TCities[]>(['cities'])
     try {
       if (!cities) {
         throw new Error('Cities data not found in cache')
@@ -36,11 +36,7 @@ export const HouseService = {
 
       const updatedCities = cities.map((city) => {
         if (city.name === cityName) {
-          console.log("@@@ DEL1 :", city.name)
-          console.log("@@@ DEL2 :", cityName)
           const updatedHouses = city.houses.filter((house) => house.id !== houseId)
-
-          console.log("@@@ DEL :", updatedHouses)
           return { ...city, houses: updatedHouses }
         }
         return city

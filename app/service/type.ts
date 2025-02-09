@@ -7,7 +7,7 @@ export type TRequestOptions<T extends THttpMethod> = {
   url: string;
 }
 
-export type TCityWeather = {
+export type TCities = {
   name: string
   temp_c: string;
   condition: TCityCondition
