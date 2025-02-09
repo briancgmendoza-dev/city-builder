@@ -1,21 +1,28 @@
 'use client'
 
 import React from "react"
-import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
+import { useQueryClient, useQuery } from "@tanstack/react-query"
 
 import Container from "@/app/_components/container"
 import Typography from "@/app/_components/ui/typography"
 import CityContainer from "@/app/_components/container/city-container"
+import Loader from "@/app/_components/ui/loader"
 
 import { TCities } from "@/app/service/type"
 import { WeatherService } from "@/app/service/weather-service"
 
 const CitiesContainer = React.forwardRef<HTMLDivElement>((_, ref) => {
   const queryClient = useQueryClient()
-  const { error } = useSuspenseQuery<TCities[]>({
+  const { isLoading, error } = useQuery<TCities[]>({
     queryFn: () => WeatherService.getAllCitiesRealTimeWeatherUpdate(queryClient),
     queryKey: ['cities'],
   })
+
+  if (isLoading) {
+    return (
+      <Loader />
+    )
+  }
 
   if (error) {
     return (
