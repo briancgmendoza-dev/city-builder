@@ -18,6 +18,7 @@ const Modal = React.forwardRef<HTMLDivElement, TModalProps>(({ isOpen, closeModa
         bg-gray-900
         bg-opacity-50
         transition-opacity
+        z-[100]
         ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
       `}
       ref={ref}

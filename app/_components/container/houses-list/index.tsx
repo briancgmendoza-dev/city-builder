@@ -84,7 +84,7 @@ const HousesList = React.forwardRef<HTMLDivElement, THousesListProps>(({ city },
   )
 
   return (
-    <Container ref={ref} type="section" className="md:w-[50%]">
+    <Container ref={ref} type="section">
       <Container className="flex items-center justify-between bg-slate-200 p-4">
         <Typography type="h2" text={city.name} className="font-bold" />
         <DisplayWeather temperature={`${city.temp_c} °C`} showIcon={city.condition.text} />
