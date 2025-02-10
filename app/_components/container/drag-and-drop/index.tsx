@@ -5,7 +5,7 @@ import { TDragAndDropProps } from '@/app/_components/container/drag-and-drop/typ
 
 /**
  * TODO: FIX BUGS in DnD
- * 1. First created house doesn't appear
+ * 1. First created house doesn't appear (only showing 2 divs, when it should have 3) -> Note: Houses (in design component) shows 3 houses
  * 2. Can only drop from top to bottom child div (cant go bottom to top)
  * 3. Floor slider can no longer slide, just clicking to next/prev step
  * 4. Houses (in design component) doesn't switch upon successful drag n drop
