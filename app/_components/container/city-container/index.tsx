@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { useQuery } from "@tanstack/react-query"
 
 import Container from "@/app/_components/container"
@@ -9,16 +9,17 @@ import { TCities } from "@/app/service/type"
 
 const CityContainer = React.forwardRef<HTMLDivElement>((_, ref) => {
   const { data: cities } = useQuery<TCities[]>({ queryKey: ['cities'] })
+  const memoizedCities = useMemo(() => cities ?? [], [cities]);
   return (
     <Container ref={ref} className="w-full">
-      {cities?.map((city) => (
+      {memoizedCities?.map((city) => (
         <Container key={city.name} className="flex flex-col md:flex-row items-center">
           <Container className="w-screen md:w-[30%]">
             <HousesList city={city} />
           </Container>
 
           <Container className="w-screen md:w-[70%] mb-10 md:mb-0 overflow-auto">
-            <HousesContainer house={city.houses} />
+            <HousesContainer house={city.houses} cityName={city.name} />
           </Container>
         </Container>
       ))}

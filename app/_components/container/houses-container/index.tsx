@@ -1,47 +1,26 @@
-import React from "react"
+import React from "react";
 
-import Container from "@/app/_components/container"
-import Triangle from "@/app/_components/house/triangle"
-import Floors from "@/app/_components/house/floors"
-import Windows from "@/app/_components/house/windows"
-import Door from "@/app/_components/house/door"
+import Container from "@/app/_components/container";
+import House from "@/app/_components/container/houses-container/house"
+import { THousesContainerProps,  } from "@/app/_components/container/houses-container/type";
 
-import { THousesContainerProps } from "@/app/_components/container/houses-container/type"
-
-const HousesContainer = React.forwardRef<HTMLDivElement, THousesContainerProps>(({ house }, ref) => {
+const HousesContainer = React.memo<THousesContainerProps>(({ house }) => {
+  if (house.length === 0) return null
   return (
-    <Container ref={ref} type="section" className="flex items-center justify-evenly mt-10 md:mt-0 sm:mt-4">
-      {house.length > 0 ? house.map((h) => {
-          const floorsArray = Array.from({ length: h.floors })
-          return (
-            <div key={h.id} className="mx-4">
-              <Triangle />
-              {floorsArray.map((_, index) => {
-                const isLastFloor = index === floorsArray.length - 1;
-                return (
-                  <div key={index}>
-                    {isLastFloor ? (
-                      <Floors color={h.color} floorsClassName={`${floorsArray.length === 1 ? "pt-6" : "pt-2"} flex px-1.5`}>
-                        <Windows number_of_windows={1} />
-                        <Door />
-                      </Floors>
-                    ) : (
-                      <Floors color={h.color}>
-                        <Windows
-                          number_of_windows={2}
-                          parentWindowsContainerClassName="flex items-center justify-evenly py-4"
-                        />
-                      </Floors>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
-          )
-        }) : (null)}
+    <Container type="section" className="flex items-center justify-evenly mt-10 md:mt-0 sm:mt-4">
+      {house.length > 0 ? house.map((h) => <House key={h.id} house={h} />) : null}
     </Container>
-  )
-})
+  );
+}, (prevProps, nextProps) => {
+  const isSame = prevProps.house === nextProps.house
 
-HousesContainer.displayName = "HousesContainer"
-export default HousesContainer
+  if (!isSame) {
+    // Using prevProps for displaying cityName
+    console.log(`Re-rendering ${prevProps.cityName} House Container due to house update`)
+  }
+
+  return isSame
+});
+
+HousesContainer.displayName = "HousesContainer";
+export default React.memo(HousesContainer);
