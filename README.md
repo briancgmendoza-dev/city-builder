@@ -67,4 +67,13 @@ City Builder is a React-based application that allows users to create and manage
    ```js
    git clone https://github.com/briancgmendoza-dev/city-builder.git
    cd city-builder
+   npm install
    ```
+
+### Create .ENV and add the ff values:
+   - You need to create an account in Weatherapi.com
+
+```js
+NEXT_PUBLIC_BASE_URL=
+NEXT_PUBLIC_API_KEY=
+```
