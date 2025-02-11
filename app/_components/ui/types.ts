@@ -22,10 +22,11 @@ export type TSliderProps = {
 }
 
 export type TInputTextProps = {
-  text?: string
+  value?: string | number
   name?: string
   cb: (string: string) => void
   className?: string
+  placeholder: string
 }
 
 export type TButtonProps = {
@@ -40,7 +41,7 @@ export type TButtonProps = {
 export type TModalProps = {
   isOpen: boolean
   closeModal: () => void
-  modalPropsCityName: string
+  modalContent: React.ReactNode
 }
 
 export type TDisplayWeatherProps = {

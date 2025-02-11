@@ -88,8 +88,9 @@ const AddHouse: React.FC<TAddHouseFormProps> = ({ cb, city }) => {
               <>
                 <Typography text={key.charAt(0).toUpperCase() + key.slice(1)} />
                 <InputText
+                  placeholder="Pick a unique name"
                   name={key}
-                  text={value as string}
+                  value={value as string}
                   cb={(newHouseName) => handleUpdateName(newHouseName)}
                   className="px-4 py-2 mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 />

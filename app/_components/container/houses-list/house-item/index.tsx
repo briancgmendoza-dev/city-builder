@@ -15,7 +15,8 @@ const HouseItem = React.memo<THouseItemProps>(({ house, updateHouse, handleDelet
     <Container>
       <Container className="px-4 flex flex-row items-start justify-between my-2">
         <InputText
-          text={house.name}
+          placeholder="House Name"
+          value={house.name}
           cb={(newHouseName) => updateHouse(house.id as string, (h) => ({ ...h, name: newHouseName }))}
           className="w-[150px] md:w-[30%] px-4 py-2"
         />

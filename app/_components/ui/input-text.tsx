@@ -2,7 +2,7 @@ import React from "react"
 
 import { TInputTextProps } from "@/app/_components/ui/types"
 
-const InputText = React.forwardRef<HTMLInputElement, TInputTextProps>(({ name, text, cb, className }, ref) => {
+const InputText = React.forwardRef<HTMLInputElement, TInputTextProps>(({ name, value, cb, className, placeholder }, ref) => {
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     cb(event.target.value)
   }
@@ -10,10 +10,11 @@ const InputText = React.forwardRef<HTMLInputElement, TInputTextProps>(({ name, t
     <input
       ref={ref}
       type="text"
-      value={text}
+      value={value}
       onChange={handleNameChange}
       className={className}
       name={name}
+      placeholder={placeholder}
     />
   )
 })

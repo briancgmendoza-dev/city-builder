@@ -8,6 +8,7 @@ import Button from "@/app/_components/ui/button"
 import Modal from "@/app/_components/ui/modal"
 import HouseIcon from "@/app/_components/icons/house"
 import HouseItem from "@/app/_components/container/houses-list/house-item"
+import AddHouse from "@/app/_components/form/add-house"
 
 import { THousesListProps, THouse } from "@/app/_components/container/houses-list/type"
 import { TCities } from "@/app/service/type"
@@ -80,7 +81,18 @@ const HousesList = React.memo<THousesListProps>(({ city }) => {
         />
       </Container>
       {showModal && (
-        <Modal isOpen={showModal} closeModal={() => setShowModal(!showModal)} modalPropsCityName={modalPropsCityName} />
+        <Modal
+          isOpen={showModal}
+          closeModal={() => setShowModal(!showModal)}
+          modalContent={
+            <>
+              <Container className="flex justify-between items-center mb-4">
+                <Typography type="h1" text="Building your dream house..." className="text-lg font-bold" />
+              </Container>
+              <AddHouse cb={() => setShowModal(!showModal)} city={modalPropsCityName} />
+            </>
+          }
+        />
       )}
     </Container>
   )

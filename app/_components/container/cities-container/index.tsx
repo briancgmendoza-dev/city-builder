@@ -10,12 +10,25 @@ import Loader from "@/app/_components/ui/loader"
 
 import { TCities } from "@/app/service/type"
 import { WeatherService } from "@/app/service/weather-service"
+import { colorOptions, floorOptions } from "@/app/constant"
 
 const CitiesContainer = React.forwardRef<HTMLDivElement>((_, ref) => {
   const queryClient = useQueryClient()
   const { isLoading, error } = useQuery<TCities[]>({
     queryFn: () => WeatherService.getAllCitiesRealTimeWeatherUpdate(queryClient),
     queryKey: ['cities'],
+  })
+
+  // Initializing and setting ColorOptions
+  useQuery({
+    queryFn: () => colorOptions,
+    queryKey: ['colorOptions']
+  })
+
+  // Initializing and setting FloorOptions
+  useQuery({
+    queryFn: () => floorOptions,
+    queryKey: ['floorOptions']
   })
 
   if (isLoading) {
