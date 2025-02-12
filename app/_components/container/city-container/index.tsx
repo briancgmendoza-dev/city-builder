@@ -10,8 +10,9 @@ import { TCities } from "@/app/service/type"
 const CityContainer = React.forwardRef<HTMLDivElement>((_, ref) => {
   const { data: cities } = useQuery<TCities[]>({ queryKey: ['cities'] })
   const memoizedCities = useMemo(() => cities ?? [], [cities]);
+
   return (
-    <Container ref={ref} className="w-full">
+    <Container ref={ref} className="w-full" dataTestId="city-container">
       {memoizedCities?.map((city) => (
         <Container key={city.name} className="flex flex-col md:flex-row items-center">
           <Container className="w-screen md:w-[30%]">
