@@ -16,7 +16,7 @@ const ColorPicker = React.forwardRef<HTMLDivElement, TColorPickerProps>(({ color
     cb(event.target.value)
   }
   return (
-    <Container ref={ref} className="px-3 py-1 flex items-center justify-between w-[180px]">
+    <Container ref={ref} className="px-3 py-1 flex items-center justify-between w-[180px]" dataTestId="color-picker-container">
       <Typography text="Color:" className="text-sm mr-1 font-semibold" />
       <Select
         options={colorOptions}
