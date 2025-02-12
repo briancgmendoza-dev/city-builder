@@ -13,7 +13,7 @@ const housesWithData: THouse[] = [
   { id: generateAlphanumericId(), name: 'test-house-2', floors: 2, color: 'blue' },
 ]
 
-describe('House Container', () => {
+describe('Houses Container', () => {
   const defaultProps: THousesContainerProps = {
     house: [],
     cityName: 'Test City'
@@ -66,13 +66,13 @@ describe('House Container', () => {
       <HousesContainer house={housesWithData} cityName="test-city" />
     )
 
-    const singleHouseData: THouse =
+    const houseData: THouse =
       { id: generateAlphanumericId(), name: 'test-house-3', floors: 1, color: 'pink' }
 
     const housesContainer = await screen.getByTestId('houses-container')
     expect(housesContainer).toBeInTheDocument()
 
-    rerender(<HousesContainer house={[singleHouseData]} cityName="test-city" />)
+    rerender(<HousesContainer house={[houseData]} cityName="test-city" />)
     expect(housesContainer).toBeInTheDocument()
   })
 })
