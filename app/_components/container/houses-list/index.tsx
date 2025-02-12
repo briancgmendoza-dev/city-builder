@@ -53,8 +53,7 @@ const HousesList = React.memo<THousesListProps>(({ city }) => {
         <Typography type="h2" text={city.name} className="font-bold" />
         <DisplayWeather temperature={`${city.temp_c} °C`} showIcon={city.condition.text} />
       </Container>
-      HousesList
-      {/* {city.houses.length > 0 ? city.houses.map((house) => (
+      {city.houses.length > 0 ? city.houses.map((house) => (
         <HouseItem
           key={house.id}
           house={house}
@@ -65,7 +64,7 @@ const HousesList = React.memo<THousesListProps>(({ city }) => {
         <Container className="flex items-center justify-center">
           <Typography text="No house yet..." />
         </Container>
-      )} */}
+      )}
 
       <Container className="bg-slate-200 flex justify-center items-center p-4 mb-5">
         <Button
