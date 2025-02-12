@@ -37,7 +37,7 @@ describe('Houses Container', () => {
     expect(cityContainer).toBeInTheDocument()
   })
 
-  test('should render House components when houses are provided', async () => {
+  test('should render Houses component when houses are provided', async () => {
     render (
       <HousesContainer house={housesWithData} cityName="test-city" />
     )
@@ -62,6 +62,8 @@ describe('Houses Container', () => {
   })
 
   test('should re-render when house prop does change', async () => {
+    // Note: You should see a console.log in test saying:
+    // console.log(`Re-rendering ${prevProps.cityName} House Container due to house update`)
     const { rerender } = render(
       <HousesContainer house={housesWithData} cityName="test-city" />
     )
