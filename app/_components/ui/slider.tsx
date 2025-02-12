@@ -12,6 +12,7 @@ const Slider = React.forwardRef<HTMLInputElement, TSliderProps>(({ min, max, ste
     value={value}
     onChange={onChange}
     className={className}
+    data-testid="slider"
   />
 ))
 
