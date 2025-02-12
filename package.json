@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch --coverage"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "@tanstack/query-sync-storage-persister": "^5.66.0",
