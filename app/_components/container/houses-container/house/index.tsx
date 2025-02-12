@@ -8,7 +8,6 @@ import Door from "@/app/_components/house/door"
 import { THouseProps } from "@/app/_components/container/houses-container/house/type"
 
 const House = React.memo<THouseProps>(({ house }) => {
-  if (!house) return null
   const floorsArray = Array.from({ length: house.floors });
   return (
     <div className="mx-4" data-testid="house">
