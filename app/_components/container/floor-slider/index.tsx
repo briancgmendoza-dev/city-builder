@@ -11,7 +11,7 @@ const FloorSlider = React.forwardRef<HTMLDivElement, TFloorSliderProps>(({ cb, f
     cb(+event.target.value)
   }
   return (
-    <Container ref={ref} className="px-3 py-1 flex md:flex-col align-center justify-between w-[220px]">
+    <Container ref={ref} className="px-3 py-1 flex md:flex-col align-center justify-between w-[220px]" dataTestId="floor-slider-container">
       <Typography text={`Floors: ${floors}`} className="text-sm font-semibold" />
       <Slider
         min={1}
@@ -19,7 +19,6 @@ const FloorSlider = React.forwardRef<HTMLDivElement, TFloorSliderProps>(({ cb, f
         step={1}
         value={floors}
         onChange={handleSliderChange}
-        className=""
       />
     </Container>
   )
