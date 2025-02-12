@@ -8,8 +8,7 @@ const HousesContainer = React.memo<THousesContainerProps>(({ house }) => {
   if (house.length === 0) return null
   return (
     <Container type="section" className="flex items-center justify-evenly mt-10 md:mt-0 sm:mt-4" dataTestId="houses-container">
-      HousesContainer
-      {/* {house.length > 0 ? house.map((h) => <House key={h.id} house={h} />) : null} */}
+      {house.length > 0 ? house.map((h) => <House key={h.id} house={h} />) : null}
     </Container>
   );
 }, (prevProps, nextProps) => {

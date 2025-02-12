@@ -11,7 +11,7 @@ const House = React.memo<THouseProps>(({ house }) => {
   if (!house) return null
   const floorsArray = Array.from({ length: house.floors });
   return (
-    <div className="mx-4">
+    <div className="mx-4" data-testid="house">
       <Triangle />
       {floorsArray.map((_, index) => {
         const isLastFloor = index === floorsArray.length - 1;
